@@ -35,6 +35,12 @@ public class TodoDAO {
 		
 	}
 
+	/** todo List DAO
+	 * @param conn
+	 * @param memberNo
+	 * @return
+	 * @throws Exception
+	 */
 	public List<Todo> selectAll(Connection conn, int memberNo) throws Exception{
 		
 		List<Todo> tdList = new ArrayList<Todo>();
@@ -70,6 +76,109 @@ public class TodoDAO {
 		}
 		
 		return tdList;
+	}
+
+	/** todo insert DAO
+	 * @param conn
+	 * @param inputTitle
+	 * @param inputContent
+	 * @param memberNumber
+	 * @return
+	 */
+	public int todoInsert(Connection conn, String inputTitle, String inputContent, int memberNumber) throws Exception{
+		
+		int result = 0;
+		
+		try {
+			
+			String sql = prop.getProperty("insert");
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, inputTitle);
+			pstmt.setString(2, inputContent);
+			pstmt.setInt(3, memberNumber);
+			
+			result = pstmt.executeUpdate();
+					
+		}finally {
+			
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	
+	/** todo Delete DAO
+	 * @param conn
+	 * @param todoNo
+	 * @param memberNumber
+	 * @return
+	 */
+	public int todoDelete(Connection conn, String deleteNo) throws Exception{
+		
+		int result = 0;
+		
+		try{
+			
+			String sql = prop.getProperty("delete");
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, deleteNo);
+			
+			result = pstmt.executeUpdate();
+			
+			conn.commit();
+			
+		}finally {
+			
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	
+	/** List 조회 DAO
+	 * @param conn
+	 * @param updateNo
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Todo> search(Connection conn, String updateNo) throws Exception{
+		
+		List<Todo> todoList = new ArrayList<Todo>();
+		
+		try {
+			
+			String sql = prop.getProperty("search");
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, updateNo);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				
+				Todo todo = new Todo();
+				
+				todo.setTodoTitle(rs.getString(1));
+				todo.setTodoMemo(rs.getString(2));
+				
+				todoList.add(todo);
+			}
+						
+		}finally {
+			
+			close(rs);
+			close(pstmt);
+			
+		}
+		
+		return todoList;
 	}
 
 }

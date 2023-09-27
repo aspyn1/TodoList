@@ -48,7 +48,7 @@
 						<c:choose>
 							<c:when test="${empty sessionScope.tdList}">								
 								<h3>해야할 일이 없습니다!</h3>
-								<a href="/WEB-INF/views/insert.jsp">등록하기</a>
+								<a href="/memo/insert">등록하기</a>
 							</c:when>
 							<c:otherwise>
 								<c:forEach var="todo" items="${tdList}">
@@ -57,17 +57,15 @@
 										<span>(${todo.todoMemo})</span>
 										<span>${todo.todoDate}</span>
 										<span>
-											<a href="/update">수정</a>
-											<a href="/delete">삭제</a>
+											<a href="/memo/update?no=${todo.todoNo}">수정</a>
+											<a href="/memo/delete?no=${todo.todoNo}">삭제</a>
 										</span>
 									</div>
-									<a href="/WEB-INF/views/insert.jsp">등록하기
-										
-									</a>
-									<a href="/member/logout">로그아웃</a>
 								</c:forEach>
 							</c:otherwise>
 						</c:choose>
+						<a href="/memo/insert">등록하기</a>
+						<a href="/member/logout">로그아웃</a>
 					</article>
 				</c:otherwise>
 				

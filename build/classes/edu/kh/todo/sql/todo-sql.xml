@@ -8,6 +8,28 @@
 		AND MEMBER_NO = ?
 	</entry>
 		
+	<entry key="insert">
+		INSERT INTO TODO
+		VALUES(SEQ_TODO_NO.NEXTVAL, ?, ?, SYSDATE, 'N', ?)
+	</entry>
+	
+	<entry key="delete">
+		DELETE
+		FROM TODO
+		WHERE TODO_NO = ?
+	</entry>
+	
+	<entry key="search">
+		SELECT TODO_TITLE, TODO_MEMO
+		FROM TODO
+		WHERE TODO_NO = ?		
+	</entry>
+	
+	
+	<entry key="update">
+		
+	</entry>
+	
 </properties>
 
 
